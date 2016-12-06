@@ -4,3 +4,7 @@ This image is a simple 'Hello world' in an HTTP server to be used to test load b
 
 ## Running a simple test
     docker run --rm -it -p 80:80 strm/helloworld-http
+    
+![Alt text](/print1.png)
+
+

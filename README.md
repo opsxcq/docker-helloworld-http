@@ -1,4 +1,5 @@
 # Simple http 'hello world' for load balancer testing
+[![Docker Pulls](https://img.shields.io/docker/pulls/strm/helloworld-http.svg?style=plastic)](https://hub.docker.com/r/strm/helloworld-http/)
 
 This image is a simple 'Hello world' in an HTTP server to be used to test load balancers. When receive an request (GET /) this image will return the current machine hostname.
 
@@ -35,3 +36,4 @@ To run the image use the command:
     docker-compose up
 
 And you will see in the result that the balancer is working and balancing the request through images ```web1``` and ```web2```
+

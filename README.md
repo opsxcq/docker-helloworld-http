@@ -29,4 +29,9 @@ Now what this image is made for, test load balancers, create the following ```do
         web2:
             image: strm/helloworld-http
             
+
+To run the image use the command:
+
+    docker-compose up
+
 And you will see in the result that the balancer is working and balancing the request through images ```web1``` and ```web2```

@@ -10,7 +10,7 @@ It shows ```Hello from <hostname>``` for every request, making it easier to dete
 
 Will result in a single instance running on your port 80, you can test and will get a result like it:
     
-![Alt text](/print1.png)
+![Print](/print1.png)
 
 ## Implementing a load balancer
 

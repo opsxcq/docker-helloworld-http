@@ -20,18 +20,18 @@ updateChartSourceWithCommitUrl(){
 }
 
 packageChart(){
-    echo=$(helm package $chart_dir --version $chart_version --destination $CF_VOLUME_PATH | cut -d " " -f 8 )
+    echo="$(helm package $chart_dir --version $chart_version --destination $CF_VOLUME_PATH | cut -d " " -f 8 )"
 }
 
 
-echo "Setting new image tag to be $CF_BRANCH_TAG_NORMALIZED"
+echo "Setting new image tag to be: $CF_BRANCH_TAG_NORMALIZED"
 $(updateValuesWithCurrentImageTag)
 
-echo "Adding metadata to chart source: Commit URL: $CF_COMMIT_URL"
+echo "Adding metadata to chart source\nCommit URL: $CF_COMMIT_URL"
 $(updateChartSourceWithCommitUrl)
 
 echo "Packaging chart with new version $chart_version to $CF_VOLUME_PATH path"
-package_path=$(packageChart)
+echo $(packageChart)
+echo "Package full path is $package_path"
 ls $CF_VOLUME_PATH
-echo "Package path is $package_path"
 

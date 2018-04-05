@@ -19,7 +19,7 @@ steps:
     image: codefresh/cli
     commands:
     - echo $CD_PIPELINE_NAME
-    - codefresh run $CD_PIPELINE_NAME -d -b $CF_BRANCH_TAG_NORMALIZED --variable CHART_VERSION=${{CHART_VERSION}} --variable NAMESPACE=${{NAMESPACE}} --variable HELM_REPO_NAME=${{HELM_REPO_NAME}} --variable CHART_NAME=${{CHART_NAME}} --sha ${{CF_SHORT_REVISION}}
+    - codefresh run $CD_PIPELINE_NAME -d -b $CF_BRANCH_TAG_NORMALIZED --variable VERSION=${{VERSION}} --variable NAMESPACE=${{NAMESPACE}} --variable HELM_REPO_NAME=${{HELM_REPO_NAME}} --variable CHART_NAME=${{CHART_NAME}} --sha ${{CF_SHORT_REVISION}}
 
   push:
     title: 'Pushing image to Dockerhub'
@@ -27,4 +27,4 @@ steps:
     image_name: codefresh/docker-helloworld-http
     candidate: ${{build_step}}
     tags:
-    - ${{CF_SHORT_REVISION}}
+    - ${{VERSION}}

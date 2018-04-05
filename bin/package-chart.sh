@@ -46,5 +46,5 @@ echo "Packaging chart with new version $chart_version to $CF_VOLUME_PATH path"
 echo $(packageChart)
 
 echo "Pushing package to Helm repo: $helmRepoUrl"
-$(pushPackgeToHelmRepo)
+pushPackgeToHelmRepo
 

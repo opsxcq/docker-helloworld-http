@@ -9,7 +9,7 @@ runCodefreshCmd(){
     cmd="$cmd --name $CHART_NAME"
     cmd="$cmd --release-name $CF_BRANCH_TAG_NORMALIZED"
     cmd="$cmd --version $VERSION"
-    cmd="$cmd --set redploy=$IS_FEATURE"
+    cmd="$cmd --set redeploy=$IS_FEATURE"
 
     echo "Running install cmd: $cmd"
     eval $cmd

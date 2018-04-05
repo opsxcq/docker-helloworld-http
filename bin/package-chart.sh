@@ -41,7 +41,13 @@ updateValuesWithCurrentImageTag(){
 }
 
 updateChartSourceWithCommitUrl(){
-    yq  '.sources[.sources | length] = env.CF_COMMIT_URL' $chart_dir/Chart.yaml --yaml-output > $CF_VOLUME_PATH/Chart.new.yaml
+    cmd='yq'
+    # Add to source the commit ur
+    cmd="$cmd '.sources[.sources | length] |= . + env.CF_COMMIT_URL'"
+    # save in new file
+    cmd="$cmd $chart_dir/Chart.yaml --yaml-output > $CF_VOLUME_PATH/Chart.new.yaml"
+    eval $cmd
+    # replace the Chart file 
     mv $CF_VOLUME_PATH/Chart.new.yaml $chart_dir/Chart.yaml
 }
 

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+defaultBranch="master"
 processNewVersion(){
     if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
     then
@@ -24,10 +25,9 @@ new_version=$(processNewVersion)
 helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
 
 # this is the default branch 
-defaultBranch="master"
 
 updateValuesWithCurrentImageTag(){
-    yq '.imageTag = env.CF_SHORT_REVISION' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml
+    yq '.imageTag = env.new_version' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml
     mv $CF_VOLUME_PATH/values.new.yaml $chart_dir/values.yaml
 }
 

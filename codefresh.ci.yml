@@ -27,4 +27,4 @@ steps:
     image_name: codefresh/docker-helloworld-http
     candidate: ${{build_step}}
     tags:
-    - ${{CF_SHORT_REVISION}}
+    - ${{VERSION}}

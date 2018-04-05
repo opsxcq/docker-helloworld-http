@@ -49,7 +49,7 @@ pushPackgeToHelmRepo(){
 exportVariables(){
     #check if master
     cf_export CHART_NAME=$chart_name
-    cf_export CHART_VERSION=$new_version
+    cf_export VERSION=$new_version
     if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
     then
         cf_export NAMESPACE="default"

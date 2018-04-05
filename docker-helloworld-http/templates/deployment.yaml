@@ -15,11 +15,11 @@ spec:
       app: {{ template "fullname" . }}
   template:
     metadata:
+      {{- if .Values.redeploy }}
+      annotations:
+        forceRedeployUniqId: {{ now | quote }}
+      {{- end }}
       labels:
-        {{- if .Values.redeploy }}
-        annotations:
-          forceRedeployUniqId: {{ now | quote }}
-        {{- end }}
         app: {{ template "fullname" . }}
         chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
         release: {{ .Release.Name  | quote }}

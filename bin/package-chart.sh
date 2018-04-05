@@ -4,7 +4,8 @@
 repo_dir=$CF_VOLUME_PATH/docker-helloworld-http
 
 # chart director
-chart_dir=$repo_dir/docker-helloworld-http
+chart_name="docker-helloworld-http"
+chart_dir=$repo_dir/$chart_name
 
 # chart version based on version from VERSION file and current branch tag
 chart_version=$(echo $(cat $repo_dir/VERSION)-$CF_BRANCH_TAG_NORMALIZED)
@@ -32,6 +33,6 @@ $(updateChartSourceWithCommitUrl)
 
 echo "Packaging chart with new version $chart_version to $CF_VOLUME_PATH path"
 echo $(packageChart)
-echo "Package full path is $package_path"
+echo "Package full path is $CF_VOLUME_PATH/$chart_name-$chart_version.tgz"
 ls $CF_VOLUME_PATH
 

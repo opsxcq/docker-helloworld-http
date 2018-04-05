@@ -26,7 +26,6 @@ packageChart(){
     chrt_path=$(helm package $chart_dir --version $chart_version --destination $CF_VOLUME_PATH | cut -d " " -f 8 )
 }
 
-echo $chart_version
 
 $(updateValuesWithCurrentImageTag)
 

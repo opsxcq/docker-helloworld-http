@@ -2,5 +2,6 @@
 
 # update imageTag in values.yaml
 
-PATH_TO_REPO=$CF_VOLUME_PATH/docker-helloworld-http
-echo $PATH_TO_REPO
+repo_dir=$CF_VOLUME_PATH/docker-helloworld-http
+chart_dir=$repo_dir/docker-helloworld-http
+cat $chart_dir/values.yaml

@@ -9,10 +9,13 @@ chart_dir=$repo_dir/$chart_name
 
 # chart version based on version from VERSION file and current branch tag
 current_version=$(cat $repo_dir/VERSION)
-new_version=$(echo $current_version-$CF_BRANCH_TAG_NORMALIZED)
+new_version=$(processNewVersion)
 
 # Codefresh gives the URL to the repo as CF_CTX_(name of the repo)_URL=....
 helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
+
+# this is the default branch 
+defaultBranch="master"
 
 updateValuesWithCurrentImageTag(){
     yq '.imageTag = env.CF_SHORT_REVISION' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml
@@ -36,17 +39,24 @@ pushPackgeToHelmRepo(){
 
 exportVariables(){
     #check if master
-    defaultBranch="master"
     cf_export CHART_NAME=$chart_name
+    cf_export CHART_VERSION=$new_version
     if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
     then
-        cf_export CHART_VERSION=$current_version
         cf_export NAMESPACE="default"
         cf_export HELM_REPO_NAME="Stable"
     else
-        cf_export CHART_VERSION=$new_version
         cf_export NAMESPACE=$CF_BRANCH_TAG_NORMALIZED
         cf_export HELM_REPO_NAME="Dev"
+    fi
+}
+
+processNewVersion(){
+    if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
+    then
+        echo $current_version
+    else
+        echo $current_version-$CF_BRANCH_TAG_NORMALIZED
     fi
 }
 

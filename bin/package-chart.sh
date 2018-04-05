@@ -10,6 +10,8 @@ chart_dir=$repo_dir/$chart_name
 # chart version based on version from VERSION file and current branch tag
 chart_version=$(echo $(cat $repo_dir/VERSION)-$CF_BRANCH_TAG_NORMALIZED)
 
+helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
+
 updateValuesWithCurrentImageTag(){
     yq '.imageTag = env.CF_BRANCH_TAG_NORMALIZED' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml
     mv $CF_VOLUME_PATH/values.new.yaml $chart_dir/values.yaml
@@ -24,6 +26,12 @@ packageChart(){
     echo="$(helm package $chart_dir --version $chart_version --destination $CF_VOLUME_PATH | cut -d " " -f 8 )"
 }
 
+pushPackgeToHelmRepo(){
+    helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
+    packagePath=$CF_VOLUME_PATH/$chart_name-$chart_version.tgz
+    curl --user $BASIC_AUTH_USER:$BASIC_AUTH_PASS --fail --data-binary "@$packagePath" $helmRepoUrl
+}
+
 
 echo "Setting new image tag to be: $CF_BRANCH_TAG_NORMALIZED"
 $(updateValuesWithCurrentImageTag)
@@ -33,6 +41,6 @@ $(updateChartSourceWithCommitUrl)
 
 echo "Packaging chart with new version $chart_version to $CF_VOLUME_PATH path"
 echo $(packageChart)
-echo "Package full path is $CF_VOLUME_PATH/$chart_name-$chart_version.tgz"
-ls $CF_VOLUME_PATH
+
+echo "Pushing package to Helm repo: $helmRepoUrl"
 

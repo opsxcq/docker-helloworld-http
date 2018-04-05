@@ -9,6 +9,12 @@ steps:
       set:
         - CF_QUALITY: true
 
+  helm_package:
+    title: Build helm package from current commit
+    image: codefresh/kube-helm:master
+    commands:
+    - ./bin/package-chart.sh
+
   push:
     title: 'Pushing image to Dockerhub'
     type: push

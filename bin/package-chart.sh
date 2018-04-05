@@ -30,7 +30,7 @@ packageChart(){
 pushPackgeToHelmRepo(){
     helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
     packagePath=$CF_VOLUME_PATH/$chart_name-$chart_version.tgz
-    curl --user $BASIC_AUTH_USER:$BASIC_AUTH_PASS --fail --data-binary "@$packagePath" $helmRepoUrl
+    curl --user $BASIC_AUTH_USER:$BASIC_AUTH_PASS --fail --data-binary "@$packagePath" $helmRepoUrl/api/charts
 }
 
 

@@ -1,13 +1,13 @@
 version: '1.0'
 steps:
-  build_step:
-    title: 'Build docker image'
-    type: build
-    dockerfile: Dockerfile
-    image_name: codefresh/docker-helloworld-http
-    metadata:
-      set:
-        - CF_QUALITY: true
+  # build_step:
+  #   title: 'Build docker image'
+  #   type: build
+  #   dockerfile: Dockerfile
+  #   image_name: codefresh/docker-helloworld-http
+  #   metadata:
+  #     set:
+  #       - CF_QUALITY: true
 
   helm_package:
     title: Build helm package from current commit
@@ -15,10 +15,10 @@ steps:
     commands:
     - ./bin/package-chart.sh
 
-  push:
-    title: 'Pushing image to Dockerhub'
-    type: push
-    image_name: codefresh/docker-helloworld-http
-    candidate: ${{build_step}}
-    tags:
-    - ${{CF_BRANCH_TAG_NORMALIZED}}
+  # push:
+  #   title: 'Pushing image to Dockerhub'
+  #   type: push
+  #   image_name: codefresh/docker-helloworld-http
+  #   candidate: ${{build_step}}
+  #   tags:
+  #   - ${{CF_BRANCH_TAG_NORMALIZED}}

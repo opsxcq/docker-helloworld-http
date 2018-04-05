@@ -10,6 +10,7 @@ chart_dir=$repo_dir/$chart_name
 # chart version based on version from VERSION file and current branch tag
 chart_version=$(echo $(cat $repo_dir/VERSION)-$CF_BRANCH_TAG_NORMALIZED)
 
+# 
 helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
 
 updateValuesWithCurrentImageTag(){
@@ -43,4 +44,5 @@ echo "Packaging chart with new version $chart_version to $CF_VOLUME_PATH path"
 echo $(packageChart)
 
 echo "Pushing package to Helm repo: $helmRepoUrl"
+$(pushPackgeToHelmRepo)
 

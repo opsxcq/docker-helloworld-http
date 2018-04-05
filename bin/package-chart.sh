@@ -10,13 +10,13 @@ chart_dir=$repo_dir/docker-helloworld-http
 chart_version=$(echo $(cat $repo_dir/VERSION)-$CF_BRANCH_TAG_NORMALIZED)
 echo $chart_version
 
-updateValuesWithCurrentImageTag
+$(updateValuesWithCurrentImageTag)
 cat $chart_dir/values.yaml
 
-updateChartSourceWithCommitUrl
+$(updateChartSourceWithCommitUrl)
 cat $chart_dir/Chart.yaml
 
-packageChart
+$(packageChart)
 
 updateValuesWithCurrentImageTag(){
     yq '.imageTag = env.CF_BRANCH_TAG_NORMALIZED' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml

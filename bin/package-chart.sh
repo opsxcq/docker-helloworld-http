@@ -23,7 +23,7 @@ updateChartSourceWithCommitUrl(){
 
 packageChart(){
     echo "Packaging chart with new version $chart_version to $CF_VOLUME_PATH path"
-    chrt_path=$(helm package $chart_dir --version $chart_version --destination $CF_VOLUME_PATH | cut -d " " -f 8 )
+    echo=$(helm package $chart_dir --version $chart_version --destination $CF_VOLUME_PATH | cut -d " " -f 8 )
 }
 
 
@@ -31,6 +31,7 @@ $(updateValuesWithCurrentImageTag)
 
 $(updateChartSourceWithCommitUrl)
 
-$(packageChart)
+package_path=$(packageChart)
 ls $CF_VOLUME_PATH
+echo "Package path is $package_path"
 

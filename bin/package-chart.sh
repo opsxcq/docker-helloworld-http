@@ -8,7 +8,8 @@ chart_name="docker-helloworld-http"
 chart_dir=$repo_dir/$chart_name
 
 # chart version based on version from VERSION file and current branch tag
-chart_version=$(echo $(cat $repo_dir/VERSION)-$CF_BRANCH_TAG_NORMALIZED)
+current_version=$(cat $repo_dir/VERSION)
+new_version=$(echo $current_version-$CF_BRANCH_TAG_NORMALIZED)
 
 # Codefresh gives the URL to the repo as CF_CTX_(name of the repo)_URL=....
 helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
@@ -24,13 +25,28 @@ updateChartSourceWithCommitUrl(){
 }
 
 packageChart(){
-    echo="$(helm package $chart_dir --version $chart_version --destination $CF_VOLUME_PATH | cut -d " " -f 8 )"
+    echo="$(helm package $chart_dir --version $new_version --destination $CF_VOLUME_PATH | cut -d " " -f 8 )"
 }
 
 pushPackgeToHelmRepo(){
     helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
-    packagePath=$CF_VOLUME_PATH/$chart_name-$chart_version.tgz
+    packagePath=$CF_VOLUME_PATH/$chart_name-$new_version.tgz
     curl --user $HELMREPO_USERNAME:$HELMREPO_PASSWORD --fail --data-binary "@$packagePath" $helmRepoUrl/api/charts
+}
+
+exportVariables(){
+    #check if master
+    defaultBranch="master"
+    if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
+    then
+        cf_export VERSION=$current_version
+        cf_export NAMESPACE=$CF_BRANCH_TAG_NORMALIZED
+        cf_export HELM_REPO_NAME="Stable"
+    else
+        cf_export VERSION=$new_version
+        cf_export NAMESPACE="default"
+        cf_export HELM_REPO_NAME="Dev"
+    fi
 }
 
 
@@ -40,9 +56,11 @@ $(updateValuesWithCurrentImageTag)
 echo "Adding metadata to chart source\nCommit URL: $CF_COMMIT_URL"
 $(updateChartSourceWithCommitUrl)
 
-echo "Packaging chart with new version $chart_version to $CF_VOLUME_PATH path"
+echo "Packaging chart with new version $new_version to $CF_VOLUME_PATH path"
 echo $(packageChart)
 
 echo "Pushing package to Helm repo: $helmRepoUrl"
 pushPackgeToHelmRepo
 
+echo "exporting variables to next steps"
+exportVariables

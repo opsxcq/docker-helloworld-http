@@ -1,0 +1,18 @@
+version: '1.0'
+steps:
+  build_step:
+    title: 'Build docker image'
+    type: build
+    dockerfile: Dockerfile
+    image_name: codefresh/docker-helloworld-http
+    metadata:
+      set:
+        - CF_QUALITY: true
+
+  push_to_cfcr:
+    title: 'Pushing image to cfcr'
+    type: push
+    image_name: codefresh/docker-helloworld-http
+    candidate: ${{build_step}}
+    tags:
+    - ${{CF_BRANCH_TAG_NORMALIZED}}

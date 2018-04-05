@@ -15,6 +15,11 @@ steps:
     commands:
     - ./bin/package-chart.sh
 
+  print_kube:
+    image: codefresh/kube-helm:master
+    commands:
+    - kubectl config view
+
   # push:
   #   title: 'Pushing image to Dockerhub'
   #   type: push

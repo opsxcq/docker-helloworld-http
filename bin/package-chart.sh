@@ -1,6 +1,8 @@
 #!/bin/bash
 
+# this is the default branch 
 defaultBranch="master"
+
 processNewVersion(){
     if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
     then
@@ -24,10 +26,17 @@ new_version=$(processNewVersion)
 # Codefresh gives the URL to the repo as CF_CTX_(name of the repo)_URL=....
 helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
 
-# this is the default branch 
 
 updateValuesWithCurrentImageTag(){
-    yq '.imageTag = env.new_version' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml
+    cmd='yq'
+    # Add argument to be used inside jq
+    cmd="$cmd --arg new_version \"$new_version\""
+    # set imageTag to the version
+    cmd="$cmd '.imageTag = \$new_version'"
+    # save in new file
+    cmd="$cmd $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml"
+    eval $cmd
+    # replace the value file 
     mv $CF_VOLUME_PATH/values.new.yaml $chart_dir/values.yaml
 }
 

@@ -3,14 +3,14 @@
 # repository path in codefresh volume
 repo_dir=$CF_VOLUME_PATH/docker-helloworld-http
 
-# chart director
+# chart directory
 chart_name="docker-helloworld-http"
 chart_dir=$repo_dir/$chart_name
 
 # chart version based on version from VERSION file and current branch tag
 chart_version=$(echo $(cat $repo_dir/VERSION)-$CF_BRANCH_TAG_NORMALIZED)
 
-# 
+# Codefresh gives the URL to the repo as CF_CTX_(name of the repo)_URL=....
 helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
 
 updateValuesWithCurrentImageTag(){

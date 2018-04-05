@@ -62,5 +62,5 @@ echo $(packageChart)
 echo "Pushing package to Helm repo: $helmRepoUrl\n"
 pushPackgeToHelmRepo
 
-echo "exporting variables to next steps\m"
+echo "\nexporting variables to next steps\n"
 exportVariables

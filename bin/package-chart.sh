@@ -1,5 +1,14 @@
 #!/bin/bash
 
+processNewVersion(){
+    if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
+    then
+        echo $current_version
+    else
+        echo $current_version-$CF_BRANCH_TAG_NORMALIZED
+    fi
+}
+
 # repository path in codefresh volume
 repo_dir=$CF_VOLUME_PATH/docker-helloworld-http
 
@@ -50,16 +59,6 @@ exportVariables(){
         cf_export HELM_REPO_NAME="Dev"
     fi
 }
-
-processNewVersion(){
-    if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
-    then
-        echo $current_version
-    else
-        echo $current_version-$CF_BRANCH_TAG_NORMALIZED
-    fi
-}
-
 
 echo "Setting new image tag to be: $CF_BRANCH_TAG_NORMALIZED"
 $(updateValuesWithCurrentImageTag)

@@ -13,7 +13,7 @@ chart_version=$(echo $(cat $repo_dir/VERSION)-$CF_BRANCH_TAG_NORMALIZED)
 # 
 helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
 
-echo "auth to repo $BASIC_AUTH_USER:$BASIC_AUTH_PASS"
+echo "auth to repo $HELMREPO_USERNAME:$HELMREPO_PASSWORD"
 
 updateValuesWithCurrentImageTag(){
     yq '.imageTag = env.CF_BRANCH_TAG_NORMALIZED' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml
@@ -32,7 +32,7 @@ packageChart(){
 pushPackgeToHelmRepo(){
     helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
     packagePath=$CF_VOLUME_PATH/$chart_name-$chart_version.tgz
-    curl --user $BASIC_AUTH_USER:$BASIC_AUTH_PASS --fail --data-binary "@$packagePath" $helmRepoUrl/api/charts
+    curl --user $HELMREPO_USERNAME:$HELMREPO_PASSWORD --fail --data-binary "@$packagePath" $helmRepoUrl/api/charts
 }
 
 

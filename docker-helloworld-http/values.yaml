@@ -3,7 +3,7 @@
 imageTag: latest
 
 # image image name without the tag
-image: codefresh/codefresh/docker-helloworld-http
+image: codefresh/docker-helloworld-http
 
 # replicaCount default is 1
 replicaCount: 1

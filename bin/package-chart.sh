@@ -13,6 +13,8 @@ chart_version=$(echo $(cat $repo_dir/VERSION)-$CF_BRANCH_TAG_NORMALIZED)
 # 
 helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
 
+echo "auth to repo $BASIC_AUTH_USER:$BASIC_AUTH_PASS"
+
 updateValuesWithCurrentImageTag(){
     yq '.imageTag = env.CF_BRANCH_TAG_NORMALIZED' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml
     mv $CF_VOLUME_PATH/values.new.yaml $chart_dir/values.yaml

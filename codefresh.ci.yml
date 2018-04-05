@@ -18,6 +18,7 @@ steps:
   run_cd:
     image: codefresh/cli
     commands:
+    - env
     - codefresh run ${{CD_PIPELINE_NAME}} --variable VERSION=${{VERSION}} --variable NAMESPACE=${{NAMESPACE}} --variable HELM_REPO_NAME=${{HELM_REPO_NAME}}
 
   # push:

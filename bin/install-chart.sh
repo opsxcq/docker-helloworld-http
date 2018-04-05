@@ -7,7 +7,7 @@ runCodefreshCmd(){
     cmd="$cmd --repository $HELM_REPO_NAME"
 
     echo "Running install cmd: $cmd"
-    eval cmd
+    eval $cmd
 }
 
 runCodefreshCmd

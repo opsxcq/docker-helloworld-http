@@ -50,17 +50,17 @@ exportVariables(){
 }
 
 
-echo "Setting new image tag to be: $CF_BRANCH_TAG_NORMALIZED"
+echo "Setting new image tag to be: $CF_BRANCH_TAG_NORMALIZED\n"
 $(updateValuesWithCurrentImageTag)
 
-echo "Adding metadata to chart source\nCommit URL: $CF_COMMIT_URL"
+echo "Adding metadata to chart source\nCommit URL: $CF_COMMIT_URL\n"
 $(updateChartSourceWithCommitUrl)
 
-echo "Packaging chart with new version $new_version to $CF_VOLUME_PATH path"
+echo "Packaging chart with new version $new_version to $CF_VOLUME_PATH path\n"
 echo $(packageChart)
 
-echo "Pushing package to Helm repo: $helmRepoUrl"
+echo "Pushing package to Helm repo: $helmRepoUrl\n"
 pushPackgeToHelmRepo
 
-echo "exporting variables to next steps"
+echo "exporting variables to next steps\m"
 exportVariables

@@ -9,6 +9,10 @@ metadata:
     heritage: {{ .Release.Service  | quote }}
     version: {{ .Values.imageTag | quote }}
 spec:
+  {{- if .Values.redeploy }}
+  annotations:
+    forceRedeployUniqId: {{ now | quote }}
+  {{- end }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:

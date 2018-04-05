@@ -81,7 +81,7 @@ echo "Setting new image tag to be: $CF_BRANCH_TAG_NORMALIZED"
 $(updateValuesWithCurrentImageTag)
 
 echo "Adding metadata to chart source"
-echo "Commit URL: $CF_COMMIT_URL\n"
+echo "Commit URL: $CF_COMMIT_URL"
 $(updateChartSourceWithCommitUrl)
 
 echo "Packaging chart with new version $new_version to $CF_VOLUME_PATH path"

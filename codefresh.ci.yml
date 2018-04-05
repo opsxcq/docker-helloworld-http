@@ -15,6 +15,11 @@ steps:
     commands:
     - ./bin/package-chart.sh
 
+  run_cd:
+    image: codefresh/cli
+    commands:
+    - codefresh run ${{CD_PIPELINE_NAME}} --variable VERSION=${{VERSION}} --variable NAMESPACE=${{NAMESPACE}} --variable HELM_REPO_NAME=${{HELM_REPO_NAME}}
+
   # push:
   #   title: 'Pushing image to Dockerhub'
   #   type: push

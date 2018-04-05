@@ -15,7 +15,7 @@ new_version=$(echo $current_version-$CF_BRANCH_TAG_NORMALIZED)
 helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
 
 updateValuesWithCurrentImageTag(){
-    yq '.imageTag = env.CF_BRANCH_TAG_NORMALIZED' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml
+    yq --arg new_version "$new_version" '.imageTag = $new_version' $chart_dir/values.yaml --yaml-output > $CF_VOLUME_PATH/values.new.yaml
     mv $CF_VOLUME_PATH/values.new.yaml $chart_dir/values.yaml
 }
 

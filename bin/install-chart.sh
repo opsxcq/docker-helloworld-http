@@ -1,7 +1,8 @@
 #!/bin/bash
 
 runCodefreshCmd(){
-    cmd="codefresh install-chart --tiller-namespace kube-system"
+    cmd="codefresh install-chart"
+    cmd="$cmd --tiller-namespace kube-system"
     cmd="$cmd --cluster $WORKING_CLUSTER"
     cmd="$cmd --namespace $NAMESPACE"
     cmd="$cmd --repository $HELM_REPO_NAME"

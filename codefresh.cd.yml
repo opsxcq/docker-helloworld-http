@@ -3,4 +3,4 @@ steps:
   install_chart:
     image: codefresh/cli
     commands:
-    - ./bin/install-chart.sh
+    - sh bin/install-chart.sh

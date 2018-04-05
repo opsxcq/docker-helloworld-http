@@ -9,8 +9,8 @@ steps:
       set:
         - CF_QUALITY: true
 
-  push_to_cfcr:
-    title: 'Pushing image to cfcr'
+  push:
+    title: 'Pushing image to Dockerhub'
     type: push
     image_name: codefresh/docker-helloworld-http
     candidate: ${{build_step}}

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./bin/helpers.sh
+
 # this is the default branch 
 defaultBranch="master"
 
@@ -61,21 +63,6 @@ pushPackgeToHelmRepo(){
     curl --user $HELMREPO_USERNAME:$HELMREPO_PASSWORD --fail --data-binary "@$packagePath" $helmRepoUrl/api/charts
 }
 
-exportVariables(){
-    #check if master
-    cf_export CHART_NAME=$chart_name
-    cf_export VERSION=$new_version
-    if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
-    then
-        cf_export NAMESPACE="default"
-        cf_export HELM_REPO_NAME="Stable"
-        cf_export IS_FEATURE=false
-    else
-        cf_export NAMESPACE=$CF_BRANCH_TAG_NORMALIZED
-        cf_export HELM_REPO_NAME="Dev"
-        cf_export IS_FEATURE=true
-    fi
-}
 
 echo "Setting new image tag to be: $CF_BRANCH_TAG_NORMALIZED"
 $(updateValuesWithCurrentImageTag)

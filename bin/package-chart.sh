@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ls $PWD
+ls $PWD/bin
+
 source .$PWD/bin/helpers.sh
 
 # this is the default branch 

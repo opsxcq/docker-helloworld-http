@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: {{ .Release.Name  | quote }}
+    heritage: {{ .Release.Service  | quote }}
+    version: {{ .Values.imageTag | quote }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+  template:
+    metadata:
+      {{- if .Values.redeploy }}
+      annotations:
+        forceRedeployUniqId: {{ now | quote }}
+      {{- end }}
+      labels:
+        app: {{ template "fullname" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        release: {{ .Release.Name  | quote }}
+        heritage: {{ .Release.Service  | quote }}
+        version: {{ .Values.imageTag | quote }}
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        ports:
+        - containerPort: {{ .Values.port }}
+          protocol: TCP

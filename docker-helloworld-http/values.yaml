@@ -1,0 +1,23 @@
+
+# imageTag which image tag to use in the deployment
+imageTag: latest
+
+# image image name without the tag
+image: codefresh/docker-helloworld-http
+
+# replicaCount default is 1
+replicaCount: 1
+
+# imagePullPolicy 'Always' if imageTag is 'latest'
+# else set to 'IfNotPresent' 
+# ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+imagePullPolicy : Always
+
+# port image exposed port
+port: 80
+
+# serviceType
+serviceType: LoadBalancer
+
+# redeploy true to redeploy the the deployment
+redeploy: false

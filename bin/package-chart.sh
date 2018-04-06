@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./bin/helpers.sh
+source .$PWD/bin/helpers.sh
 
 # this is the default branch 
 defaultBranch="master"

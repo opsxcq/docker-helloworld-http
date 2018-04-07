@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "PWD: $PWD"
 ls $PWD
 ls $PWD/bin
 

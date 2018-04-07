@@ -44,11 +44,16 @@ fetchHelmRepoURL(){
 
 fetchPushRepoPath(){
     local name=""
+    local basicPath=$(fetchHelmRepoURL)
     if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
     then
         name="stable"
     else
         name="dev"
     fi
-    echo $(fetchHelmRepoURL)/api/codefresh/$name/charts
+    echo $basicPath/api/codefresh/$name/charts
+}
+
+test(){
+    echo "bla"
 }

@@ -45,8 +45,9 @@ packageChart(){
 }
 
 pushPackgeToHelmRepo(){
-    packagePath=$CF_VOLUME_PATH/$chart_name-$new_version.tgz
-    curl --fail --data-binary "@$packagePath" $(fetchPushRepoPath)
+    local packagePath=$CF_VOLUME_PATH/$chart_name-$new_version.tgz
+    local URL=$(fetchPushRepoPath)
+    curl --fail --data-binary "@$packagePath" $URL
 }
 
 
@@ -60,7 +61,7 @@ $(updateChartSourceWithCommitUrl)
 echo "Packaging chart with new version $new_version to $CF_VOLUME_PATH path"
 echo $(packageChart)
 
-echo "Pushing package to Helm repo: $fetchPushRepoPath"
+echo "Pushing package to Helm repo: $(fetchPushRepoPath)"
 pushPackgeToHelmRepo
 
 echo

@@ -1,0 +1,14 @@
+apiVersion: v1
+description: Codefresh demo
+name: docker-helloworld-http
+keywords:
+- codefresh
+- kubernetes
+- helm
+home: https://codefresh.io/
+icon: https://avatars1.githubusercontent.com/u/11412079?v=3
+sources:
+- https://github.com/olegsu/docker-helloworld-http
+maintainers:
+- name: Oleg Sucharevich
+  email: olegs@codefresh.io

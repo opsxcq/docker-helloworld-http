@@ -2,18 +2,6 @@
 
 source $PWD/bin/helpers.sh
 
-# this is the default branch 
-defaultBranch="master"
-
-processNewVersion(){
-    if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
-    then
-        echo $current_version
-    else
-        echo $current_version-$CF_BRANCH_TAG_NORMALIZED
-    fi
-}
-
 name=$(echo $PWD | sed 's:'$CF_VOLUME_PATH\/'::g')
 
 # repository path in codefresh volume
@@ -23,12 +11,9 @@ repo_dir=$CF_VOLUME_PATH/$name
 chart_name=$name
 chart_dir=$repo_dir/$chart_name
 
-# chart version based on version from VERSION file and current branch tag
-current_version=$(cat $repo_dir/VERSION)
 new_version=$(processNewVersion)
 
-# Codefresh gives the URL to the repo as CF_CTX_(name of the repo)_URL=....
-helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
+helmRepoUrl=$(fetchHelmRepoURL)
 
 
 updateValuesWithCurrentImageTag(){
@@ -60,9 +45,8 @@ packageChart(){
 }
 
 pushPackgeToHelmRepo(){
-    helmRepoUrl=$(env | grep CF_CTX | sed s/CF_CTX_.*=//g)
     packagePath=$CF_VOLUME_PATH/$chart_name-$new_version.tgz
-    curl --user $HELMREPO_USERNAME:$HELMREPO_PASSWORD --fail --data-binary "@$packagePath" $helmRepoUrl/api/charts
+    curl --fail --data-binary "@$packagePath" $(fetchPushRepoPath)
 }
 
 
@@ -70,7 +54,7 @@ echo "Setting new image tag to be: $CF_BRANCH_TAG_NORMALIZED"
 $(updateValuesWithCurrentImageTag)
 
 echo "Adding metadata to chart source"
-echo "Commit URL: $CF_COMMIT_URL\n"
+echo "Commit URL: $CF_COMMIT_URL"
 $(updateChartSourceWithCommitUrl)
 
 echo "Packaging chart with new version $new_version to $CF_VOLUME_PATH path"

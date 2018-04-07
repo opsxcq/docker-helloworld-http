@@ -1,0 +1,30 @@
+version: '1.0'
+steps:
+  build_step:
+    title: 'Build docker image'
+    type: build
+    dockerfile: Dockerfile
+    image_name: codefresh/docker-helloworld-http
+    metadata:
+      set:
+        - CF_QUALITY: true
+
+  helm_package:
+    title: Build helm package from current commit
+    image: codefresh/kube-helm:master
+    commands:
+    - ./bin/package-chart.sh
+
+  push:
+    title: 'Pushing image to Dockerhub'
+    type: push
+    image_name: codefresh/docker-helloworld-http
+    candidate: ${{build_step}}
+    tags:
+    - ${{VERSION}}
+
+  run_cd:
+    image: codefresh/cli
+    commands:
+    - codefresh run $CD_PIPELINE_NAME -d -b $CF_BRANCH_TAG_NORMALIZED --variable VERSION=${{VERSION}} --variable NAMESPACE=${{NAMESPACE}} --variable HELM_REPO_NAME=${{HELM_REPO_NAME}} --variable CHART_NAME=${{CHART_NAME}} --variable IS_FEATURE=${{IS_FEATURE}}
+    fail_fast: false

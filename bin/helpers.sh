@@ -45,5 +45,5 @@ fetchHelmRepoURL(){
 fetchPushRepoPath(){
     local name=""
     local basicPath=$(echo $(fetchHelmRepoURL) | sed s/codefresh/api\\/codefresh/g)
-    echo $basicPath/charts
+    echo $basicPath'charts'
 }

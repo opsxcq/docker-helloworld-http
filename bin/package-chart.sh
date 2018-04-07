@@ -60,7 +60,7 @@ $(updateChartSourceWithCommitUrl)
 echo "Packaging chart with new version $new_version to $CF_VOLUME_PATH path"
 echo $(packageChart)
 
-echo "Pushing package to Helm repo: $helmRepoUrl"
+echo "Pushing package to Helm repo: $fetchPushRepoPath"
 pushPackgeToHelmRepo
 
 echo

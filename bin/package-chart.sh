@@ -14,11 +14,13 @@ processNewVersion(){
     fi
 }
 
+name=$(echo $PWD | sed 's:'$CF_VOLUME_PATH\/'::g')
+
 # repository path in codefresh volume
-repo_dir=$CF_VOLUME_PATH/docker-helloworld-http
+repo_dir=$CF_VOLUME_PATH/$name
 
 # chart directory
-chart_name="docker-helloworld-http"
+chart_name=$name
 chart_dir=$repo_dir/$chart_name
 
 # chart version based on version from VERSION file and current branch tag

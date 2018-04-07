@@ -4,7 +4,7 @@ echo "PWD: $PWD"
 ls $PWD
 ls $PWD/bin
 
-source .$PWD/bin/helpers.sh
+source $PWD/bin/helpers.sh
 
 # this is the default branch 
 defaultBranch="master"

@@ -1,9 +1,13 @@
 #!/bin/bash
 
+echo1(){
+    echo $1
+}
+
 exportVariables(){
     #check if master
-    cf_export CHART_NAME=$chart_name
-    cf_export VERSION=$new_version
+    cf_export CHART_NAME=$1 #chart name
+    cf_export VERSION=$2 # version
     if [ "$CF_BRANCH_TAG_NORMALIZED" = "$defaultBranch" ]
     then
         cf_export NAMESPACE="default"

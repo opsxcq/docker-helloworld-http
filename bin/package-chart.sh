@@ -1,9 +1,5 @@
 #!/bin/bash
 
-echo "PWD: $PWD"
-ls $PWD
-ls $PWD/bin
-
 source $PWD/bin/helpers.sh
 
 # this is the default branch 
@@ -83,4 +79,4 @@ pushPackgeToHelmRepo
 
 echo
 echo "exporting variables to next steps"
-exportVariables
+exportVariables $chart_name $new_version

@@ -1,9 +1,5 @@
 #!/bin/bash
 
-echo1(){
-    echo $1
-}
-
 exportVariables(){
     #check if master
     cf_export CHART_NAME=$1 #chart name

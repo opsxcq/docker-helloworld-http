@@ -1,6 +1,28 @@
 version: '1.0'
 steps:
+
+  create_release:
+    title: Creating release in Github on master branch
+    image: codefresh/kube-helm:master
+    commands:
+    - ./bin/create-release.sh
+    when:
+      branch:
+        only:
+          - master
+
+  strict_to_production:
+    title: Matching production version with git
+    image: codefresh/kube-helm:master
+    commands:
+    - ./bin/match-production-version.sh
+    when:
+      branch:
+        only:
+          - master
+
   install_chart:
+    title: Installing chart
     image: codefresh/cli
     commands:
     - sh bin/install-chart.sh

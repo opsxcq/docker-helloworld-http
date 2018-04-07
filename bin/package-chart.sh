@@ -2,7 +2,7 @@
 
 source $PWD/bin/helpers.sh
 
-name=$(echo $PWD | sed 's:'$CF_VOLUME_PATH\/'::g')
+name=$(fetchChartName)
 
 # repository path in codefresh volume
 repo_dir=$CF_VOLUME_PATH/$name

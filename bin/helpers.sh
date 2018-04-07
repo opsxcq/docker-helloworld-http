@@ -47,3 +47,11 @@ fetchPushRepoPath(){
     local basicPath=$(echo $(fetchHelmRepoURL) | sed s/codefresh/api\\/codefresh/g)
     echo $basicPath'charts'
 }
+
+fetchChartName(){
+    echo $(echo $PWD | sed 's:'$CF_VOLUME_PATH\/'::g')
+}
+
+processReleaseName(){
+    echo $CF_BRANCH_TAG_NORMALIZED
+}

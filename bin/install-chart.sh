@@ -7,7 +7,7 @@ runCodefreshCmd(){
     cmd="$cmd --namespace $NAMESPACE"
     cmd="$cmd --repository $HELM_REPO_NAME"
     cmd="$cmd --name $CHART_NAME"
-    cmd="$cmd --release-name $CF_BRANCH_TAG_NORMALIZED"
+    cmd="$cmd --release-name $(processReleaseName)"
     cmd="$cmd --version $VERSION"
     if $IS_FEATURE ; then cmd="$cmd --context dynamic" ; fi
 

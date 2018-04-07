@@ -1,7 +1,7 @@
 version: '1.0'
 steps:
   build_step:
-    title: 'Build docker image'
+    title: Building docker image
     type: build
     dockerfile: Dockerfile
     image_name: codefresh/docker-helloworld-http
@@ -10,13 +10,13 @@ steps:
         - CF_QUALITY: true
 
   helm_package:
-    title: Build helm package from current commit
+    title: Building helm package from current commit
     image: codefresh/kube-helm:master
     commands:
     - ./bin/package-chart.sh
 
   push:
-    title: 'Pushing image to Dockerhub'
+    title: Pushing image to Dockerhub
     type: push
     image_name: codefresh/docker-helloworld-http
     candidate: ${{build_step}}
@@ -24,6 +24,7 @@ steps:
     - ${{VERSION}}
 
   run_cd:
+    title: Executine CD pipeline
     image: codefresh/cli
     commands:
     - sh bin/run-cd.sh
